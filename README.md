@@ -3,7 +3,6 @@ Calculator Application Simple maked in Android with Unit Test (jUnit) and Functi
 
 ## Screenshot
 
-(https://github.com/juliafealves/calculator-app/blob/master/screenshot.jpeg)
-
+![Screenshot](screenshot.jpeg)
 
 Basead and adaptaded of the project open-source: https://github.com/obaro/SampleCalculator
