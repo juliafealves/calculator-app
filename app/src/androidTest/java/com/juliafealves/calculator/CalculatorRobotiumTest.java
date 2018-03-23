@@ -1,11 +1,18 @@
 package com.juliafealves.calculator;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
+
+import com.juliafealves.calculator.models.Calculator;
+import com.juliafealves.calculator.pageObject.CalculatorPageObject;
 import com.robotium.solo.Solo;
+
+import java.io.Console;
 
 public class CalculatorRobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 {
     private Solo solo;
+    private CalculatorPageObject calculatorPO;
 
     public CalculatorRobotiumTest()
     {
@@ -16,6 +23,7 @@ public class CalculatorRobotiumTest extends ActivityInstrumentationTestCase2<Mai
     public void setUp() throws Exception
     {
         solo = new Solo(getInstrumentation(), getActivity());
+        calculatorPO = new CalculatorPageObject(solo);
     }
 
     @Override
@@ -24,49 +32,41 @@ public class CalculatorRobotiumTest extends ActivityInstrumentationTestCase2<Mai
         solo.finishOpenedActivities();
     }
 
-    public void testSum()
+    public void testSum() throws Exception
     {
-        solo.clickOnButton("7");
-        solo.clickOnButton("+");
-        solo.clickOnButton("3");
-        solo.clickOnButton("=");
-        solo.waitForText("7+3 = 10");
+        calculatorPO.sum(7, 3);
+        String result = calculatorPO.getTextResult();
+        boolean isRight = result.equals("10");
+        assertTrue("The value not equals (SUM): ", isRight);
     }
 
-    public void testMinus()
+    public void testMinus() throws Exception
     {
-        solo.clickOnButton("5");
-        solo.clickOnButton("-");
-        solo.clickOnButton("3");
-        solo.clickOnButton("=");
-        solo.waitForText("5-3 = 2");
+        calculatorPO.minus(5, 3);
+        String result = calculatorPO.getTextResult();
+        boolean isRight = result.equals("2");
+        assertTrue("The value not equals (MINUS): ", isRight);
     }
 
-    public void testMultiplication()
+    public void testMultiplication() throws Exception
     {
-        solo.clickOnButton("6");
-        solo.clickOnButton("*");
-        solo.clickOnButton("3");
-        solo.clickOnButton("=");
-        solo.waitForText("6*3 = 18");
+        calculatorPO.multiplication(6, 3);
+        String result = calculatorPO.getTextResult();
+        boolean isRight = result.equals("18");
+        assertTrue("The value not equals (MULTIPLICATION): ", isRight);
     }
 
-    public void testDivision()
+    public void testDivision() throws Exception
     {
-        solo.clickOnButton("1");
-        solo.clickOnButton("2");
-        solo.clickOnButton("/");
-        solo.clickOnButton("2");
-        solo.clickOnButton("=");
-        solo.waitForText("12/2 = 6");
+        calculatorPO.division(8, 2);
+        String result = calculatorPO.getTextResult();
+        boolean isRight = result.equals("4");
+        assertTrue("The value not equals (DIVISION): ", isRight);
     }
 
-    public void testDivisionByZero()
+    public void testDivisionByZero() throws Exception
     {
-        solo.clickOnButton("1");
-        solo.clickOnButton("/");
-        solo.clickOnButton("0");
-        solo.clickOnButton("=");
+        calculatorPO.division(7, 0);
         assertTrue("Message not showed!", solo.searchText("Cannot divide by zero."));
     }
 }
